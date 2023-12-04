@@ -12,7 +12,8 @@ from pyglet.graphics import TextureGroup
 from pyglet.window import key, mouse
 
 TICKS_PER_SEC = 60
-
+GL_FOG = (255,255,255)
+GL_FOG_COLOR = (255,255,255)
 # Size of sectors used to ease block loading.
 SECTOR_SIZE = 16
 
@@ -852,23 +853,7 @@ class Window(pyglet.window.Window):
         self.reticle.draw(GL_LINES)
 
 
-def setup_fog():
-    """ Configure the OpenGL fog properties.
 
-    """
-    # Enable fog. Fog "blends a fog color with each rasterized pixel fragment's
-    # post-texturing color."
-    glEnable(GL_FOG)
-    # Set the fog color.
-    glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.69, 1.0, 1))
-    # Say we have no preference between rendering speed and quality.
-    glHint(GL_FOG_HINT, GL_DONT_CARE)
-    # Specify the equation used to compute the blending factor.
-    glFogi(GL_FOG_MODE, GL_LINEAR)
-    # How close and far away fog starts and ends. The closer the start and end,
-    # the denser the fog in the fog range.
-    glFogf(GL_FOG_START, 20.0)
-    glFogf(GL_FOG_END, 60.0)
 
 
 def setup():
@@ -887,7 +872,6 @@ def setup():
     # as smooth."
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-    setup_fog()
 
 
 def main():
